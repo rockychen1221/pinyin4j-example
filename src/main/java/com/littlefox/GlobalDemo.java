@@ -1,5 +1,6 @@
 package com.littlefox;
 
+import org.springframework.util.ResourceUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -8,6 +9,8 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -16,20 +19,30 @@ import java.util.Properties;
  * Description:
  */
 public class GlobalDemo {
+    private static File file;
 
-  public static    Properties properties  = new Properties();
+    /**
+     * 静态初始化数据
+     */
+    static {
+        try {
+            file =ResourceUtils.getFile("classpath:data.properties");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+  public static Properties properties  = new Properties();
 
     public static void main(String[] args) throws Exception {
 
         // 使用ClassLoader加载properties配置文件生成对应的输入流
-        InputStream in = GlobalDemo.class.getClassLoader().getResourceAsStream("E:\\WorkSpace\\pinyin4j-example\\src\\main\\java\\data.properties");
+        InputStream in = new FileInputStream(file);
         // 使用properties对象加载输入流
         properties.load(in);
         //获取key对应的value值
 
-
         // TODO Auto-generated method stub
-
         // 1.创建解析器工厂
         DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
         // 2.通过解析器工厂创建解析器对象

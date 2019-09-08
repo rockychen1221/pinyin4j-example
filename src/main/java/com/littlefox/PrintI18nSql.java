@@ -1,5 +1,6 @@
 package com.littlefox;
 
+import org.springframework.util.ResourceUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -8,6 +9,8 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -15,17 +18,27 @@ import java.util.Properties;
  * Created by rockychen on 2018/5/8 0008 上午 11:40
  * Description:
  */
-public class PrintSql {
+public class PrintI18nSql {
 
+    private static File file;
 
-
+    /**
+     * 静态初始化数据
+     */
+    static {
+        try {
+            file = ResourceUtils.getFile("classpath:data.properties");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static Properties properties  = new Properties();
 
     public static void main(String[] args) throws Exception {
 
         // 使用ClassLoader加载properties配置文件生成对应的输入流
-        InputStream in = GlobalDemo.class.getClassLoader().getResourceAsStream("data.properties");
+        InputStream in = new FileInputStream(file);
         // 使用properties对象加载输入流
         properties.load(in);
         //获取key对应的value值
@@ -38,9 +51,9 @@ public class PrintSql {
         // 2.通过解析器工厂创建解析器对象
         DocumentBuilder builder=factory.newDocumentBuilder();
         //3.通过解析器解析xml,在内存中构建dom树(中文)
-        Document cn_dom=builder.parse(new File("datafile/LocList_cn.xml"));
+        Document cn_dom=builder.parse(new File("global_city/LocList_cn.xml"));
         // 英文Dom
-        Document en_dom=builder.parse(new File("datafile/LocList_en.xml"));
+        Document en_dom=builder.parse(new File("global_city/LocList_en.xml"));
         //操作
         //得到xml文件的根元素
         Element cn_root=cn_dom.getDocumentElement();

@@ -13,7 +13,6 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
  */
 public class ToPingyin {
 
-
     //首字母转小写
     public static String toLowerCaseFirstOne(String s){
         if(Character.isLowerCase(s.charAt(0)))
@@ -65,7 +64,6 @@ public class ToPingyin {
                     }else{
                         t4 += t2[0];
                     }
-
                 } else
                     t4 += Character.toString(t1[i]);
             }
