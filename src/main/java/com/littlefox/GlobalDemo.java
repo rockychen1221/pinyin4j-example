@@ -48,9 +48,9 @@ public class GlobalDemo {
         // 2.通过解析器工厂创建解析器对象
         DocumentBuilder builder=factory.newDocumentBuilder();
         //3.通过解析器解析xml,在内存中构建dom树(中文)
-        Document cn_dom=builder.parse(new File("global_city/LocList_cn.xml"));
+        Document cn_dom=builder.parse(ResourceUtils.getFile("classpath:global_cn.xml"));
         // 英文Dom
-        Document en_dom=builder.parse(new File("global_city/LocList_en.xml"));
+        Document en_dom=builder.parse(ResourceUtils.getFile("classpath:global_en.xml"));
         //操作
         //得到xml文件的根元素
         Element cn_root=cn_dom.getDocumentElement();
